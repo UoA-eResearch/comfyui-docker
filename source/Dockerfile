@@ -59,8 +59,11 @@ COPY custom_nodes_list ./custom_nodes_list
 RUN python ${COMFYUI_PATH}/custom_nodes/ComfyUI-Manager/cm-cli.py install --exit-on-fail $(tr '\n' ' ' < ./custom_nodes_list | sed 's/ $//')
 RUN git clone https://github.com/Gourieff/ComfyUI-ReActor ${COMFYUI_PATH}/custom_nodes/ComfyUI-ReActor && \
     cd ${COMFYUI_PATH}/custom_nodes/ComfyUI-ReActor && \
-    pip install -r requirements.txt && \
+    uv pip install -r requirements.txt && \
     python install.py
+RUN git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git ${COMFYUI_PATH}/custom_nodes/ComfyUI-VideoHelperSuite && \
+    cd ${COMFYUI_PATH}/custom_nodes/ComfyUI-VideoHelperSuite && \
+    uv pip install -r requirements.txt
 RUN python ${COMFYUI_PATH}/custom_nodes/ComfyUI-Manager/cm-cli.py show installed
 RUN python ${COMFYUI_PATH}/custom_nodes/ComfyUI-Manager/cm-cli.py fix all
 
